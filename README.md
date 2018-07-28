@@ -6,6 +6,8 @@ Easily generate self-signed certificates for all of your local development domai
 ## READ BEFORE USE
 This was built for Mac OSX High Sierra and may not work with other versions. This uses special commands to automatically remove/add your certificate to your Keychain. That command may be different on older OSX versions. That command also requires root access. Feel free to inspect the `makecert` file and review the 2 calls to `sudo security xxxx` command. You can comment them out and run them manually, or manually add the certificate to your Keychain yourself, if your not comfortable with a script needing to run `sudo`.
 
+This will add `CertMagic:` to the beginning of the certificate. This is so it can find it later, to delete it, before regenerating it again.
+
 ## Why use this?
 
 If your like me, you want to use `https` on your local development and are tired of seeing the not secure warnings.

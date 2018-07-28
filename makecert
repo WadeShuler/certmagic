@@ -1,0 +1,34 @@
+#!/bin/bash
+if [ ! -f config.php ]; then
+    echo
+    echo "Error: Config File Not Found!"
+    echo "Copy example.config.php to config.php and edit it to your needs."
+    echo
+    exit;
+fi
+
+PHP_PATH="$(which php)"
+
+# Build config file
+${PHP_PATH} bin/build_config.php
+
+# Generate certificates
+openssl req -config tmp/generated.conf -new -sha256 -newkey rsa:2048 -nodes -keyout certs/server.key -x509 -days 3650 -out certs/server.crt
+
+# Remove previous certificate (to prevent duplicate entries)
+sudo security delete-certificate -c "CertMagic:"
+
+# Add to Mac keychain
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain $(pwd)/certs/server.crt
+
+echo
+echo
+echo "Done!"
+echo
+echo "--> Remember to add the crt and key file to your vhosts config!"
+echo
+echo Apache Example:
+echo
+echo SSLEngine on
+echo SSLCertificateFile \"$(pwd)/certs/server.crt\"
+echo SSLCertificateKeyFile \"$(pwd)/certs/server.key\"
