@@ -29,6 +29,10 @@ I recommend installing this in your `XAMPP/xampfiles` directory. At least that's
     cd /Applications/XAMPP/xamppfiles
     git clone git@github.com:WadeShuler/certmagic.git
 
+Copy `example.config.php` to `config.php`:
+
+    cp example.config.php config.php
+
 Edit `config.php` and replace the dummy data with your own. The `domains` array is the magic sauce. It will loop through them and automatically add the appropriate `DNS.1`, `DNS.2`, etc into the cert.
 
 Then run:
